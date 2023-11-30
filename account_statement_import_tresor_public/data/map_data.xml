@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 ForgeFlow, S.L.
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+    <record id="tresor_public_statement_map" model="account.statement.import.sheet.mapping">
+        <field name="is_tresor_public" eval="True"/>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="timestamp_format">%d/%m/%y</field>
+        <field name="file_encoding">utf-8</field>
+        <field name="delimiter">semicolon</field>
+        <field name="name">Tresor Public</field>
+        <field name="timestamp_column">Date</field>
+        <field name="currency_column">Devise</field>
+        <field name="amount_debit_column">Crédit</field>
+        <field name="amount_credit_column">Débit</field>
+        <field name="description_column">Libellé</field>
+        <field name="transaction_id_column">Id</field>
+        <field name="bank_name_column">Intitulé du compte</field>
+        <field name="bank_account_column">Numéro de compte</field>
+    </record>
+</odoo>

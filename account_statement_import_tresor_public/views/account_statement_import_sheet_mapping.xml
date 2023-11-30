@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 ForgeFlow, S.L.
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="account_statement_sheet_mapping_inherit" model="ir.ui.view">
+        <field name="name">account.statement.sheet.mapping.inherit</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="inherit_id" ref="account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='float_thousands_sep']" position="before">
+                    <field name="is_tresor_public"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_statement_sheet_mapping_form_inherit" model="ir.ui.view">
+        <field name="name">account.statement.sheet.mapping.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account_statement_import.journal_dashboard_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//a[@name='import_account_statement']" position="after">
+                <h1>ICI</h1>
+            </xpath>
+        </field>
+    </record>
+</odoo>
