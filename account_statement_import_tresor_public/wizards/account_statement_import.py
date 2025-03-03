@@ -97,11 +97,11 @@ class AccountStatementImport(models.TransientModel):
         self._create_bank_statements(stmts_vals, result)
         # Now that the import worked out, set it as the bank_statements_source
         # of the journal
-        if journal.bank_statements_source != "file_import_oca":
+        if journal.bank_statements_source != "file_import":
             # Use sudo() because only 'account.group_account_manager'
             # has write access on 'account.journal', but 'account.group_account_user'
             # must be able to import bank statement files
-            journal.sudo().write({"bank_statements_source": "file_import_oca"})
+            journal.sudo().write({"bank_statements_source": "file_import"})
 
     def _create_bank_statements(self, stmts_vals, result):
         """Create new bank statements from imported values,
@@ -150,22 +150,14 @@ class AccountStatementImport(models.TransientModel):
         # Prepare import feedback
         num_ignored = len(existing_st_line_ids)
         if num_ignored > 0:
-            result["notifications"].append(
-                {
-                    "type": "warning",
-                    "message": _(
-                        "%d transactions had already been imported and were ignored."
-                    )
-                               % num_ignored
-                    if num_ignored > 1
-                    else _("1 transaction had already been imported and was ignored."),
-                    "details": {
-                        "name": _("Already imported items"),
-                        "model": "account.bank.statement.line",
-                        "ids": list(existing_st_line_ids.keys()),
-                    },
-                }
-            )
+            if num_ignored == 1:
+                msg = _("1 transaction had already been imported and was ignored.")
+            else:
+                msg = (
+                    _("%d transactions had already been imported and were ignored.")
+                    % num_ignored
+                )
+            result["notifications"].append(msg)
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
         for statement in statements:
             if not statement.balance_end_real:
@@ -233,4 +225,3 @@ class AccountStatementImport(models.TransientModel):
             shutil.move(output_file, data_file)
 
         return data_file
-#
