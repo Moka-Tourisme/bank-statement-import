@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep:*)",
+      "Bash(docker exec:*)",
+      "Bash(python3:*)",
+      "Bash(docker:*)"
+    ]
+  }
+}
